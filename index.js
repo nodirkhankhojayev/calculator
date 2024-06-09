@@ -37,25 +37,38 @@ let operator = document.querySelectorAll(".operator");
 
 button.forEach(button => {
   button.addEventListener("click", () => {
-    display.value = button.textContent;
+    display.value += button.textContent;
   });
 });
 
-operator.forEach(operator =>{
-  operator.addEventListener("click", () =>{
-      for(let i = 0; i < operator.length; i++){
-        display.value = operator[i].textContent;
-      }   
-  })
+
+
+
+
+
+document.addEventListener("DOMContentLoaded", function() {
+  
+  let result = '';
+
+  button.forEach(button => {
+      button.addEventListener('click', function() {
+          const value = button.dataset.value;
+          
+          if (value === 'AC') {
+              result = '';
+          } else if (value === 'DEL') {
+              result = result.slice(0, -1);
+          } else if (value === '=') {
+              try {
+                  result = eval(result);
+              } catch (error) {
+                  result = 'Error';
+              }
+          } else {
+              result += value;
+          }
+
+          display.value = result;
+      });
+  });
 });
-
-
-// if(button.textContent === "=") {
-//   try {
-//       dispaly.value = eval(display.value); 
-//   } catch(error) {
-//       display.value = "Error"; 
-//   }
-// } else {
-//   display.value += button.textContent; 
-// }
